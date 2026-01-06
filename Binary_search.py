@@ -22,15 +22,15 @@ print("Element found at index:",result+1)
 #now We wille be using the Recursive version of it
 def recursive_binary_search(nums,tager,low,high):
     mid=(low+high)//2
-    if mid==target:
+    if nums[mid]==target:
         return mid
     elif low>high:
         return -1
-    if mid>target:
+    if nums[mid]>target:
         return recursive_binary_search(nums,target,low,mid-1)
     else:
         return recursive_binary_search(nums,target,mid+1,high)    
     
 
 result_recursive=recursive_binary_search(nums,target,0,len(nums)-1)
-print("Element found at index(using recursion):",result_recursive)
+print("Element found at index(using recursion):",result_recursive+1)
