@@ -1,90 +1,174 @@
-class Node:
-    def __init__(self,data=None,next=None):
-        self.data=data
-        self.next=next
 
-class LinkedList:
+from typing import Optional
+from typing import ListNode
+from typing import List
+class Node:
+    def __init__(self,val):
+        self.val=val
+        self.next=None
+
+
+class SinglyLinkedList:
     def __init__(self):
         self.head=None
 
-    def insert_at_beginning(self,data):
-        node=Node(data,self.head)
-        self.head=node
-
-
-
-    def insert_at_end(self, data):
-        if self.head is None:
-            print("The list is empty, inserting at the beginning.")   
-            self.insert_at_beginning(data)
-
+    def append(self,val):
+        new_node=Node(val)
+        if self.head==None:
+            self.head=new_node
         else:
-            itr=self.head
-            while itr.next:
-                itr=itr.next
+            curr=self.head
+            while curr.next!=None:
+                curr=curr.next
+            curr.next=new_node        
 
-            itr.next=Node(data,None)
-
-
-    def print_list(self):
+    def PrintLinkedList(self):
         if self.head is None:
-            print("The List Is Empty")
+            print("Empty Linked List")
             return
+
+        curr = self.head
+        while curr is not None:
+            print(curr.val, end="")
+            if curr.next is not None:
+                print(" -> ", end="")
+            curr = curr.next
+        print()  
+
+
+    # # def PrintLinkedList(self):
+    #     if self.head is None:
+    #         print("Empty Linked List")
+    #         return
+
+    #     curr = self.head
+    #     while curr is not None:
+    #         print(curr.val, end="")
+    #         if curr.next is not None:
+    #             print(" -> ", end="")
+    #         curr = curr.next
+    #     print()
+                    
+
+    def insert_after(self,target,val):
+        if self.head==None:
+            print('There is Nothing in the Linked List')
+        else:    
+            curr=self.head
+            while curr.next!=None:
+                if curr.val==target:
+                    new_Node=Node(val)
+                    
+                    new_Node.next=curr.next
+                    curr.next=new_Node
+                    break
+                curr=curr.next    
+
+    def Insert_At_Specific_Index(self,index,val):
+        if self.head==None:
+            print("Lineked List Is Empty")
+        elif index==0:
+            new_Node=Node(val)
+            new_Node.next=self.head
+            self.head=new_Node
+        else:
+            counter=0
+            curr=self.head
+            while curr.next!=None:
+                if counter==index-1:
+                    new_Node=Node(val)
+                    new_Node.next=curr.next
+
+                    curr.next=new_Node
+                    break
+                counter+=1
+                curr=curr.next
+
+    def delete_element_at_index(self,index):
+        if self.head==None:
+            print("Link List is Empty")
+        elif index==0:
+            self.head=self.head.next
+        else:
+            counter=0
+            curr=self.head
+            while curr.next!=None:
+                if counter==index-1:
+                    curr.next=curr.next.next
+                counter+=1    
+                curr=curr.next        
+
+
+    def reverse(self):
+        if self.head==None:
+            print("Linked List is Empty")
+            return
+            
+        prev=None
+        temp=self.head
+        while temp is not None:
+            front=temp.next
+            temp.next=prev
+            prev=temp
+            temp=front
+        self.head=prev        
+
+    def detectCycle(self, head: Optional[Node]) -> Optional[Node]: # type: ignore
+        slow=head
+        fast=head
         
-        itr=self.head
-
-        liststr=''
-        while itr:
-            liststr+=str(itr.data)+' --> '
-            itr=itr.next
-
-        print(liststr+'None')
-
-
-
-
-    def insert_inbetween(self,data,position):
-        if position==0:
-            self.insert_at_beginning(data)
-            return
-        itr=self.head
-        count=0
-        while itr:
-            if count==position-1:
-                node=Node(data,itr.next)
-                itr.next=node
-                break
-            else:
-                itr=itr.next
-                count+=1
-
-
-    def delete_from_end(self):
-        if self.head is None:
-            print("The list is empty, nothing to delete.")
-            return
-
-        if self.head.next is None:
-            self.head=None
-            return
-
-        itr=self.head
-        while itr.next.next:
-            itr=itr.next
-
-        itr.next=None
-
-
-if __name__ == '__main__':
-    ll=LinkedList()
-    ll.insert_at_end(5)
-    ll.insert_at_end(10)
-    ll.insert_at_beginning(2)
-    ll.insert_at_end(15)
-    ll.insert_inbetween(7,2)
-    ll.delete_from_end()
-    ll.print_list()            
+        while fast is not None and fast.next is not None:
+            slow=slow.next
+            fast=fast.next.next
+            if slow ==fast:
+                count=1
+                slow=head
+                while slow!=fast:
+                    slow=slow.next
+                    fast=fast.next
+                slow=slow.next    
+                while slow!=fast:
+                    slow=slow.next
+                    count+=1    
+                return count   
+        return 0      
 
 
 
+        
+                    
 
+
+
+                
+
+    
+
+ll=SinglyLinkedList()
+ll.append(10)
+ll.append(10)
+ll.append(10)
+ll.append(10)
+ll.append(10)
+ll.append(5)
+ll.append(10)
+ll.append(10)
+
+ll.append(10)
+ll.insert_after(5,12)
+ll.insert_after(12,13)
+ll.insert_after(13,14)
+
+ll.Insert_At_Specific_Index(3,100)
+ll.Insert_At_Specific_Index(0,100)
+
+ll.PrintLinkedList()
+# ll.delete_element_at_index(7)
+
+
+
+ll.PrintLinkedList()
+
+ll.reverse()
+ll.PrintLinkedList()
+ll.detectCycle(ll.head)

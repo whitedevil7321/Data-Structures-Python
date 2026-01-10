@@ -49,14 +49,3 @@ Print_lower_triangle(met)
 print("Transpose of matrix is:")
 transposed=get_transpose(met)
 Print_matrix(transposed)
-
-
-
-        rotated=[[0]*n for _ in range(n)]
-        for i in range(n):
-            for j in range(m):
-                rotated[j][(n-1)-i]=matrix[i][j]
-
-        for i in range(n):
-            for j in range(m):
-                matrix[i][j]=rotated[i][j]

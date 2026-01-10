@@ -1,3 +1,6 @@
+
+from typing import Optional
+from typing import ListNode
 from typing import List
 class Solution:
     def search(self, nums: List[int], target: int) -> int:
@@ -12,7 +15,8 @@ class Solution:
                 return True
             elif nums[low]==nums[mid]==nums[high]:
                 low+=1
-                high-=1    
+                high-=1  
+                continue  
             elif nums[mid]<=nums[high]:
                 if nums[mid]<=target<=nums[high]:
                     low=mid+1
